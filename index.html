@@ -21,17 +21,15 @@
             background-color: var(--bg);
             color: var(--text-main);
             font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             overflow-x: hidden;
         }
 
-        /* --- HEADER REDISEÑADO --- */
+        /* --- HEADER --- */
         header { 
             background: var(--card-bg);
             border-bottom: 1px solid var(--border);
             padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
         }
         .header-content {
             max-width: 1200px;
@@ -42,45 +40,38 @@
             flex-wrap: wrap;
             gap: 20px;
         }
-        .brand-area {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+        .brand-area { display: flex; align-items: center; gap: 15px; }
         .logo { max-width: 80px; height: auto; }
-        .titles h1 { font-weight: 700; font-size: 1.8rem; margin: 0; color: var(--primary); line-height: 1.1; }
+        
+        /* Títulos Principales en BOLD */
+        .titles h1 { 
+            font-weight: 700; 
+            font-size: 1.8rem; 
+            margin: 0; 
+            color: var(--primary); 
+            line-height: 1.1; 
+        }
         .titles .subtitle { font-size: 0.95rem; color: var(--text-secondary); font-weight: 500; }
         
-        .contact-area {
-            display: flex;
-            gap: 15px;
-        }
+        .contact-area { display: flex; gap: 10px; flex-wrap: wrap; }
         .contact-badge {
             background: var(--bg);
-            padding: 8px 15px;
+            padding: 6px 14px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
             font-weight: 600;
             border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
 
-        @media (max-width: 768px) {
-            .header-content { flex-direction: column; text-align: center; }
-            .brand-area { flex-direction: column; }
-            .contact-area { flex-wrap: wrap; justify-content: center; }
-        }
-
-        /* --- CONTROLES Y LISTA DE CATEGORÍAS --- */
+        /* --- CONTROLES --- */
         .controls { max-width: 1200px; margin: 30px auto 10px; padding: 0 20px; }
-        
         .brand-filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        
         .filter-btn {
             padding: 10px 24px; border-radius: 25px; border: 1px solid var(--border);
             background: var(--card-bg); cursor: pointer; font-weight: 600; transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
         }
         .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
@@ -94,117 +85,124 @@
         }
         @media (min-width: 900px) {
             .layout-container { flex-direction: row; align-items: flex-start; }
-            .sidebar { width: 250px; flex-shrink: 0; position: sticky; top: 20px; }
+            .sidebar { width: 260px; flex-shrink: 0; position: sticky; top: 20px; }
             .main-content { flex-grow: 1; }
         }
 
-        /* Categorías Estilo Lista */
+        /* Categorías Estilo Lista en MEDIUM */
         .category-list {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 5px;
             background: var(--card-bg);
             padding: 15px;
             border-radius: var(--radius);
             border: 1px solid var(--border);
         }
+        .sidebar-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding-left: 10px;
+        }
         .cat-list-item {
-            padding: 10px 15px;
-            border-radius: 8px;
+            padding: 12px 15px;
+            border-radius: 10px;
             background: transparent;
             border: none;
             text-align: left;
             cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500; /* MEDIUM */
+            color: var(--text-main);
             transition: 0.2s;
+            font-family: 'Poppins', sans-serif;
         }
-        .cat-list-item:hover { background: var(--bg); color: var(--primary); }
-        .cat-list-item.active { background: var(--primary); color: white; font-weight: 600; }
+        .cat-list-item:hover { background: var(--bg); }
+        .cat-list-item.active { background: var(--primary); color: white; }
 
         input#search { 
             padding: 14px 25px; width: 100%; box-sizing: border-box;
             border-radius: 12px; border: 1px solid var(--border);
-            font-size: 1rem; outline: none; margin-bottom: 20px;
+            font-size: 1rem; outline: none; margin-bottom: 25px;
+            font-family: 'Poppins', sans-serif;
         }
 
-        /* --- GRID DE PRODUCTOS --- */
-        .category-title { font-size: 1.6rem; font-weight: 700; margin: 0 0 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        /* --- PRODUCTOS --- */
+        .category-title { 
+            font-size: 1.4rem; 
+            font-weight: 700; /* BOLD */
+            margin: 0 0 20px; 
+            color: var(--primary);
+        }
         
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         .card {
             background: var(--card-bg); border: 1px solid var(--border);
             border-radius: var(--radius); overflow: hidden; cursor: pointer;
-            transition: transform 0.2s; display: flex; flex-direction: column;
+            transition: 0.3s; display: flex; flex-direction: column;
         }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .card-img { height: 200px; padding: 15px; display: flex; justify-content: center; align-items: center; border-bottom: 1px solid var(--border); }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .card-img { height: 180px; padding: 15px; display: flex; justify-content: center; align-items: center; background: #fff; }
         .card-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
-        .card-brand { font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
-        .card-title { font-size: 1.1rem; font-weight: 600; margin: 5px 0; }
-        .card-price { font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-bottom: 15px; }
+        .card-body { padding: 20px; border-top: 1px solid var(--border); }
+        .card-title { font-size: 1rem; font-weight: 600; margin: 5px 0; }
+        .card-price { font-size: 1.3rem; font-weight: 700; color: var(--primary); margin-bottom: 15px; }
         
-        .card-actions {
-            display: flex; gap: 10px; margin-top: auto; flex-direction: column;
-        }
-        .btn-add { background: var(--bg); color: var(--primary); border: 1px solid var(--border); }
-        .btn-ws { background: #25d366; color: white; border: none; }
         .btn-action {
-            padding: 10px; border-radius: 10px; text-align: center; font-weight: 600;
-            font-size: 0.9rem; cursor: pointer; text-decoration: none; transition: 0.2s;
+            padding: 12px; border-radius: 10px; text-align: center; font-weight: 600;
+            font-size: 0.85rem; cursor: pointer; text-decoration: none; border: none;
+            width: 100%; margin-bottom: 8px; font-family: 'Poppins', sans-serif;
         }
-        .btn-add:hover { background: #e8e8ed; }
-        .btn-ws:hover { background: #1da851; }
+        .btn-add { background: var(--bg); color: var(--primary); }
+        .btn-ws { background: #25d366; color: white; }
 
-        /* --- MODAL (DETALLE) --- */
+        /* --- MODAL --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); display: none; justify-content: center;
-            align-items: center; z-index: 1000; padding: 20px; backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.7); display: none; justify-content: center;
+            align-items: center; z-index: 1000; padding: 20px; backdrop-filter: blur(8px);
         }
         .modal-content {
-            background: white; width: 100%; max-width: 900px; border-radius: 24px;
+            background: white; width: 100%; max-width: 850px; border-radius: 24px;
             display: flex; flex-direction: row; overflow: hidden; position: relative;
         }
         .modal-close {
-            position: absolute; top: 20px; right: 20px; width: 35px; height: 35px;
-            background: #eee; border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; cursor: pointer; font-weight: bold; z-index: 10;
+            position: absolute; top: 15px; right: 15px; width: 35px; height: 35px;
+            background: #f0f0f0; border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; cursor: pointer; z-index: 10;
         }
-        .modal-left { flex: 1.2; display: flex; align-items: center; justify-content: center; padding: 40px; border-right: 1px solid var(--border); }
-        .modal-left img { max-width: 100%; max-height: 400px; object-fit: contain; }
-        .modal-right { flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+        .modal-left { flex: 1; padding: 30px; display: flex; align-items: center; justify-content: center; background: #fff; }
+        .modal-left img { max-width: 100%; max-height: 350px; object-fit: contain; }
+        .modal-right { flex: 1; padding: 40px; border-left: 1px solid var(--border); }
 
-        @media (max-width: 800px) {
+        @media (max-width: 750px) {
             .modal-content { flex-direction: column; max-height: 90vh; overflow-y: auto; }
-            .modal-left { padding: 20px; border-right: none; border-bottom: 1px solid var(--border); }
-            .modal-right { padding: 25px; }
+            .modal-left { border-bottom: 1px solid var(--border); }
         }
 
-        .color-chip { padding: 6px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.8rem; cursor: pointer; font-weight: 500; }
-        .color-chip.active { border-color: var(--primary); background: var(--primary); color: white; }
+        .color-chip { padding: 8px 16px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.85rem; }
+        .color-chip.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        /* --- CARRITO FLOTANTE --- */
+        /* CARRITO FLOTANTE */
         .cart-float {
             position: fixed; bottom: 30px; right: 30px;
             background: var(--primary); color: white;
-            padding: 15px 25px; border-radius: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            display: none; align-items: center; gap: 10px;
-            cursor: pointer; z-index: 900; font-weight: 600;
-            transition: transform 0.2s;
+            padding: 15px 25px; border-radius: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: none; align-items: center; gap: 12px;
+            cursor: pointer; z-index: 900; font-weight: 700;
         }
-        .cart-float:hover { transform: scale(1.05); }
-        .cart-count { background: #ff3b30; color: white; border-radius: 50%; padding: 2px 8px; font-size: 0.8rem; }
-
+        .cart-count { background: #ff3b30; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; }
     </style>
 </head>
 <body>
@@ -219,7 +217,7 @@
                 </div>
             </div>
             <div class="contact-area">
-                <div class="contact-badge">📍 Barrio Obrero, San Cristobal</div>
+                <div class="contact-badge">📍 Barrio Obrero</div>
                 <div class="contact-badge">📞 0424-7717071</div>
             </div>
         </div>
@@ -231,57 +229,47 @@
 
     <div class="layout-container">
         <aside class="sidebar">
-            <div class="category-list" id="category-filters">
-                <!-- Lista de categorías aquí -->
-            </div>
+            <div class="sidebar-label">Categorías</div>
+            <div class="category-list" id="category-filters"></div>
         </aside>
 
         <main class="main-content">
-            <input type="text" id="search" placeholder="Buscar modelo (ej: iPhone 13)...">
+            <input type="text" id="search" placeholder="Buscar modelo o repuesto...">
             <div id="catalogo">
-                <div style="text-align:center; padding: 50px;">Cargando inventario...</div>
+                <div style="text-align:center; padding: 50px;">Cargando inventario profesional...</div>
             </div>
         </main>
     </div>
 
-    <!-- BOTÓN FLOTANTE DEL CARRITO -->
     <div class="cart-float" id="cart-btn" onclick="enviarPedido()">
-        <span>🛒 Enviar Pedido</span>
+        <span>🛒 Enviar Pedido a WhatsApp</span>
         <span class="cart-count" id="cart-count">0</span>
     </div>
 
-    <!-- MODAL DE DETALLE -->
-    <div class="modal-overlay" id="modal">
+    <div class="modal-overlay" id="modal" onclick="if(event.target == this) cerrarModal()">
         <div class="modal-content">
             <div class="modal-close" onclick="cerrarModal()">✕</div>
-            <div class="modal-left">
-                <img id="m-img" src="" alt="Producto">
-            </div>
+            <div class="modal-left"><img id="m-img" src=""></div>
             <div class="modal-right">
-                <div id="m-brand" style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);"></div>
-                <h2 id="m-title" style="font-size: 2rem; font-weight: 700; margin: 10px 0;"></h2>
-                <div id="m-quality" style="color: var(--accent); font-weight: 600; margin-bottom: 20px;"></div>
-                <div id="m-price" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 15px;"></div>
-                
-                <div style="font-weight: 700; margin-bottom: 10px;">Color:</div>
-                <div id="m-colors" style="display: flex; gap: 8px; margin-bottom: 25px; flex-wrap: wrap;"></div>
-                
-                <div style="display: flex; gap: 10px; flex-direction: column;">
-                    <button id="m-add" class="btn-action btn-add" style="padding: 15px;">Añadir a mi lista 🛒</button>
-                    <a href="#" id="m-ws" class="btn-action btn-ws" style="padding: 15px;" target="_blank">Comprar directo por WhatsApp</a>
-                </div>
+                <div id="m-brand" style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;"></div>
+                <h2 id="m-title" style="font-weight: 700; margin: 10px 0;"></h2>
+                <div id="m-quality" style="color: var(--accent); font-weight: 600; margin-bottom: 15px; font-size: 0.9rem;"></div>
+                <div id="m-price" style="font-size: 2rem; font-weight: 700; margin-bottom: 20px;"></div>
+                <div style="font-weight: 600; margin-bottom: 10px; font-size: 0.85rem;">Seleccionar Color:</div>
+                <div id="m-colors" style="display: flex; gap: 8px; margin-bottom: 30px; flex-wrap: wrap;"></div>
+                <button id="m-add" class="btn-action btn-add" style="background: var(--primary); color: white;">Añadir al pedido 🛒</button>
             </div>
         </div>
     </div>
 
     <script>
         const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ-AIzMvX8IctXzBSuxHch1pILRjgbGcNhH7JuGWFc9O1sK67ZU_zGc0Z8g5B7TNbLysebuWsDrN7hT/pub?output=csv';
-        const NUMERO_PRINCIPAL = '584247717071'; // Número a donde llegará el carrito completo
+        const NUMERO_PEDIDO = '584247717071'; 
         
         let inventario = {}; 
         let marcaActual = '';
-        let categoriaFiltroActual = 'TODAS';
-        let pedido = []; // Arreglo para guardar los productos del carrito
+        let categoriaActual = 'TODAS';
+        let pedido = [];
 
         function parseCSV(str) {
             const arr = []; let row = []; let cell = ''; let inQuotes = false;
@@ -304,193 +292,125 @@
                 const filas = parseCSV(d);
                 if(filas.length < 2) return;
 
-                const headers = filas[0].map(h => h.toLowerCase());
-                const iMarca = headers.findIndex(h => h.includes('marca'));
-                const iCat = headers.findIndex(h => h.includes('categor'));
-                const iProd = headers.findIndex(h => h.includes('prod') || h.includes('nom'));
-                const iCol = headers.findIndex(h => h.includes('color'));
-                const iCal = headers.findIndex(h => h.includes('calid'));
-                const iPre = headers.findIndex(h => h.includes('preci'));
-                const iDes = headers.findIndex(h => h.includes('desc'));
-                const iImg = headers.findIndex(h => h.includes('imag') || h.includes('link'));
-                const iWs = headers.findIndex(h => h.includes('whats') || h.includes('num'));
+                const h = filas[0].map(x => x.toLowerCase());
+                const iM = h.findIndex(x => x.includes('marca')), iC = h.findIndex(x => x.includes('categor'));
+                const iP = h.findIndex(x => x.includes('prod')), iCol = h.findIndex(x => x.includes('color'));
+                const iCal = h.findIndex(x => x.includes('calid')), iPre = h.findIndex(x => x.includes('preci'));
+                const iImg = h.findIndex(x => x.includes('imag')), iWs = h.findIndex(x => x.includes('whats'));
 
                 inventario = {};
                 const marcasSet = new Set();
 
                 for (let i = 1; i < filas.length; i++) {
                     const f = filas[i];
-                    if (f.length < 3 || !f[iMarca]) continue;
-
-                    const m = f[iMarca];
-                    const cat = f[iCat] || 'Repuestos Varios';
-                    const prod = f[iProd] || 'Sin nombre';
-                    const cal = f[iCal] || '';
-                    
+                    if (!f[iM]) continue;
+                    const m = f[iM], cat = f[iC] || 'Varios', prod = f[iP] || 'Producto', cal = f[iCal] || '';
                     marcasSet.add(m);
                     if (!inventario[m]) inventario[m] = {};
                     if (!inventario[m][cat]) inventario[m][cat] = {};
-                    
                     const key = `${prod}-${cal}`;
-                    if (!inventario[m][cat][key]) {
-                        inventario[m][cat][key] = { m, cat, prod, cal, variantes: [] };
-                    }
-                    inventario[m][cat][key].variantes.push({
-                        color: f[iCol] || 'Único', precio: f[iPre] || 'Consultar',
-                        desc: f[iDes] || '', img: f[iImg] || '', ws: f[iWs] || ''
-                    });
+                    if (!inventario[m][cat][key]) inventario[m][cat][key] = { m, cat, prod, cal, variantes: [] };
+                    inventario[m][cat][key].variantes.push({ color: f[iCol] || 'Único', precio: f[iPre] || 'S/P', img: f[iImg] || '', ws: f[iWs] || '' });
                 }
-                const marcasArr = Array.from(marcasSet);
-                renderMarcas(marcasArr);
-                if (marcasArr.length > 0) seleccionarMarca(marcasArr[0]);
-            } catch (e) { console.error(e); }
-        }
-
-        function renderMarcas(marcas) {
-            const c = document.getElementById('brand-filters');
-            c.innerHTML = marcas.map(m => `<button class="filter-btn" onclick="seleccionarMarca('${m}')">${m}</button>`).join('');
+                const mArr = Array.from(marcasSet);
+                document.getElementById('brand-filters').innerHTML = mArr.map(m => `<button class="filter-btn" onclick="seleccionarMarca('${m}')">${m}</button>`).join('');
+                if (mArr.length > 0) seleccionarMarca(mArr[0]);
+            } catch (e) { console.log(e); }
         }
 
         function seleccionarMarca(m) {
-            marcaActual = m; categoriaFiltroActual = 'TODAS';
+            marcaActual = m; categoriaActual = 'TODAS';
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.innerText === m));
-            renderCategorias();
+            const cats = Object.keys(inventario[m] || {});
+            document.getElementById('category-filters').innerHTML = `<button class="cat-list-item active" onclick="filtrarCat('TODAS', this)">Ver Todo</button>` +
+                cats.map(c => `<button class="cat-list-item" onclick="filtrarCat('${c}', this)">${c}</button>`).join('');
             renderCatalogo();
         }
 
-        function renderCategorias() {
-            const c = document.getElementById('category-filters');
-            const cats = Object.keys(inventario[marcaActual] || {});
-            c.innerHTML = `<button class="cat-list-item active" onclick="filtrarCat('TODAS', this)">Todas las categorías</button>` +
-                cats.map(cat => `<button class="cat-list-item" onclick="filtrarCat('${cat}', this)">${cat}</button>`).join('');
-        }
-
-        function filtrarCat(cat, btn) {
-            categoriaFiltroActual = cat;
+        function filtrarCat(c, btn) {
+            categoriaActual = c;
             document.querySelectorAll('.cat-list-item').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             renderCatalogo();
         }
 
-        function renderCatalogo(busqueda = '') {
+        function renderCatalogo(q = '') {
             const container = document.getElementById('catalogo');
             container.innerHTML = '';
             const cats = inventario[marcaActual];
             if (!cats) return;
-            busqueda = busqueda.toLowerCase();
+            q = q.toLowerCase();
 
             for (const [nomCat, prods] of Object.entries(cats)) {
-                if (categoriaFiltroActual !== 'TODAS' && nomCat !== categoriaFiltroActual) continue;
-                const filtrados = Object.values(prods).filter(p => p.prod.toLowerCase().includes(busqueda));
-                if (filtrados.length === 0) continue;
+                if (categoriaActual !== 'TODAS' && nomCat !== categoriaActual) continue;
+                const fil = Object.values(prods).filter(p => p.prod.toLowerCase().includes(q));
+                if (fil.length === 0) continue;
 
-                container.innerHTML += `<h3 class="category-title">${nomCat}</h3>`;
+                container.innerHTML += `<div class="category-title">${nomCat}</div>`;
                 const grid = document.createElement('div');
                 grid.className = 'grid-container';
 
-                filtrados.forEach((p, i) => {
+                fil.forEach((p, i) => {
                     const card = document.createElement('div');
                     card.className = 'card';
-                    if (i >= 6 && busqueda === '') card.style.display = 'none'; // Muestra 6 por defecto
-                    card.classList.add(`extra-${nomCat.replace(/\s/g,'')}`);
-                    
-                    const pString = encodeURIComponent(JSON.stringify(p));
-                    const varInicial = encodeURIComponent(JSON.stringify(p.variantes[0]));
-
-                    // Se previene que los botones abran el modal usando event.stopPropagation()
+                    const v = p.variantes[0];
+                    const pData = encodeURIComponent(JSON.stringify(p));
                     card.innerHTML = `
-                        <div class="card-img" onclick="abrirModal('${pString}')"><img src="${p.variantes[0].img}"></div>
+                        <div class="card-img" onclick="verDetalle('${pData}')"><img src="${v.img}"></div>
                         <div class="card-body">
-                            <div onclick="abrirModal('${pString}')">
-                                <div class="card-brand">${p.m}</div>
-                                <div class="card-title">${p.prod}</div>
-                                <div style="font-size:0.8rem; color:var(--text-secondary)">${p.cal} • Color: ${p.variantes[0].color}</div>
-                                <div class="card-price">${p.variantes[0].precio}</div>
-                            </div>
-                            <div class="card-actions">
-                                <button class="btn-action btn-add" onclick="agregarAlPedido('${p.prod}', '${varInicial}', event)">Añadir a la lista 🛒</button>
-                                <a href="https://wa.me/${p.variantes[0].ws}?text=Hola Pcclic Mayor, quiero info de: ${p.prod} (${p.variantes[0].color})" class="btn-action btn-ws" target="_blank" onclick="event.stopPropagation()">WhatsApp Directo</a>
-                            </div>
+                            <div class="card-brand">${p.m}</div>
+                            <div class="card-title">${p.prod}</div>
+                            <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:10px;">${p.cal}</div>
+                            <div class="card-price">${v.precio}</div>
+                            <button class="btn-action btn-add" onclick="sumarAlPedido('${nomCat}', '${p.prod}', '${p.cal}', '${v.color}', '${v.precio}')">Añadir al pedido 🛒</button>
+                            <a href="https://wa.me/${v.ws}?text=Info de ${nomCat}: ${p.prod}" class="btn-action btn-ws" target="_blank">WhatsApp Directo</a>
                         </div>
                     `;
                     grid.appendChild(card);
                 });
                 container.appendChild(grid);
-                
-                if (filtrados.length > 6 && busqueda === '') {
-                    const b = document.createElement('button');
-                    b.className = 'filter-btn';
-                    b.style.display = 'block'; b.style.margin = '0 auto 40px';
-                    b.innerText = `Ver más repuestos en ${nomCat}`;
-                    b.onclick = () => {
-                        document.querySelectorAll(`.extra-${nomCat.replace(/\s/g,'')}`).forEach(el => el.style.display = 'flex');
-                        b.style.display = 'none';
-                    };
-                    container.appendChild(b);
-                }
             }
         }
 
-        /* --- LOGICA DEL CARRITO --- */
-        window.agregarAlPedido = function(nombreProd, vRaw, event) {
-            if(event) event.stopPropagation();
-            const v = JSON.parse(decodeURIComponent(vRaw));
-            
-            pedido.push({ nombre: nombreProd, color: v.color, precio: v.precio });
-            
-            // Animación y actualización del botón
-            const countEl = document.getElementById('cart-count');
-            countEl.innerText = pedido.length;
+        window.sumarAlPedido = function(cat, prod, cal, col, pre) {
+            pedido.push({ cat, prod, cal, col, pre });
+            document.getElementById('cart-count').innerText = pedido.length;
             document.getElementById('cart-btn').style.display = 'flex';
-            
-            alert(`Añadido: ${nombreProd} (${v.color}) a tu lista.`);
+            // Pequeño efecto visual al añadir
+            const btn = document.getElementById('cart-btn');
+            btn.style.transform = 'scale(1.1)';
+            setTimeout(() => btn.style.transform = 'scale(1)', 200);
         }
 
         window.enviarPedido = function() {
-            let mensaje = "Hola *Pcclic Mayor*, este es mi pedido:\n\n";
-            pedido.forEach((item, index) => {
-                mensaje += `${index + 1}. *${item.nombre}*\n   Color: ${item.color} | Precio: ${item.precio}\n\n`;
+            let msg = "Hola *Pcclic Mayor*, mi pedido es:\n\n";
+            pedido.forEach((it, i) => {
+                msg += `${i+1}. *[${it.cat.toUpperCase()}]* ${it.prod} (${it.cal})\n Color: ${it.col} | Precio: ${it.pre}\n\n`;
             });
-            mensaje += "¿Me confirman disponibilidad y total a pagar?";
-            
-            const url = `https://wa.me/${NUMERO_PRINCIPAL}?text=${encodeURIComponent(mensaje)}`;
-            window.open(url, '_blank');
+            msg += "*Total de artículos:* " + pedido.length;
+            window.open(`https://wa.me/${NUMERO_PEDIDO}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        /* --- LOGICA DEL MODAL --- */
-        window.abrirModal = function(pRaw) {
-            const p = JSON.parse(decodeURIComponent(pRaw));
+        window.verDetalle = function(data) {
+            const p = JSON.parse(decodeURIComponent(data));
             const m = document.getElementById('modal');
-            const vars = p.variantes;
-            
             document.getElementById('m-brand').innerText = p.m;
             document.getElementById('m-title').innerText = p.prod;
             document.getElementById('m-quality').innerText = p.cal;
-            
-            const colorCont = document.getElementById('m-colors');
-            colorCont.innerHTML = vars.map((v, i) => `
-                <div class="color-chip ${i===0?'active':''}" onclick="actualizarModalVar(this, '${encodeURIComponent(JSON.stringify(v))}', '${p.prod}')">${v.color}</div>
-            `).join('');
-
-            actualizarModalVar(null, encodeURIComponent(JSON.stringify(vars[0])), p.prod);
+            actualizarVarModal(p.variantes[0], p);
+            document.getElementById('m-colors').innerHTML = p.variantes.map(v => 
+                `<div class="color-chip" onclick="actualizarVarModal(${JSON.stringify(v).replace(/"/g, '&quot;')}, ${JSON.stringify(p).replace(/"/g, '&quot;')})">${v.color}</div>`).join('');
             m.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
 
-        window.actualizarModalVar = function(el, vRaw, nombre) {
-            const v = JSON.parse(decodeURIComponent(vRaw));
-            if(el) {
-                document.querySelectorAll('.color-chip').forEach(c => c.classList.remove('active'));
-                el.classList.add('active');
-            }
+        window.actualizarVarModal = function(v, p) {
             document.getElementById('m-img').src = v.img;
             document.getElementById('m-price').innerText = v.precio;
-            
-            // Actualizar botones del modal
-            const btnAdd = document.getElementById('m-add');
-            btnAdd.onclick = () => agregarAlPedido(nombre, vRaw);
-            
-            document.getElementById('m-ws').href = `https://wa.me/${v.ws}?text=Hola Pcclic Mayor, quiero información de: ${nombre} (${v.color})`;
+            document.getElementById('m-add').onclick = () => {
+                sumarAlPedido(p.cat, p.prod, p.cal, v.color, v.precio);
+                cerrarModal();
+            };
         }
 
         window.cerrarModal = function() {
@@ -503,3 +423,4 @@
     </script>
 </body>
 </html>
+
