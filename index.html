@@ -44,12 +44,11 @@
         }
         .brand-block { display: flex; align-items: center; gap: 15px; }
         
-        /* FIX LOGO: Más grande, sin recortes */
         .logo { 
             width: auto; 
             max-width: 150px; 
             height: 60px; 
-            object-fit: contain; /* Evita que se corte */
+            object-fit: contain;
         }
         
         .brand-info h1 { font-size: 1.25rem; margin: 0; font-weight: 700; }
@@ -219,7 +218,6 @@
     <header>
         <div class="header-content">
             <div class="brand-block">
-                <!-- LOGO: Reemplaza el link por tu foto -->
                 <img src="https://i.ibb.co/tRLTjLJ/Whats-App-Image-2026-03-26-at-11-08-01-AM.jpg" class="logo" alt="Pcclic">
                 <div class="brand-info">
                     <div class="title-row">
@@ -298,7 +296,6 @@
         let modalProduct = null;
         let modalSelectedVariant = null;
 
-        // Función robusta para leer el Excel (evita que las fotos se pierdan)
         function parseCSV(str) {
             const arr = []; let row = []; let cell = ''; let inQuotes = false;
             for (let i = 0; i < str.length; i++) {
@@ -321,7 +318,6 @@
                 
                 if(rows.length < 2) return;
 
-                // Encontrar las columnas automáticamente
                 const header = rows[0].map(h => h.toLowerCase());
                 const iM = header.findIndex(h => h.includes('marca'));
                 const iC = header.findIndex(h => h.includes('categor'));
@@ -336,22 +332,27 @@
 
                 for (let i = 1; i < rows.length; i++) {
                     const row = rows[i];
-                    if (!row || !row[iM]) continue; // Saltar filas vacías
+                    if (!row || !row[iM]) continue; 
 
                     const m = row[iM], c = row[iC] || 'Otros', p = row[iP] || 'Producto';
-                    const col = row[iCol] || 'Único', cal = row[iCal] || '', pre = row[iPre] || '', img = row[iImg] || '';
+                    const col = row[iCol] || 'Único', cal = row[iCal] || '', pre = row[iPre] || '';
+                    let img = row[iImg] || '';
                     
                     brands.add(m);
                     if (!db[m]) db[m] = {};
                     if (!db[m][c]) db[m][c] = {};
                     
-                    // AGRUPAR POR NOMBRE Y CALIDAD (Para unir los colores)
                     const productKey = `${p} - ${cal}`;
                     
                     if (!db[m][c][productKey]) {
                         db[m][c][productKey] = { brand: m, cat: c, name: p, quality: cal, variants: [] };
                     }
                     
+                    // Si este color no tiene foto, usar la foto del primer color registrado (herencia de imagen)
+                    if (img === '' && db[m][c][productKey].variants.length > 0) {
+                        img = db[m][c][productKey].variants[0].img;
+                    }
+
                     db[m][c][productKey].variants.push({ color: col, price: pre, img: img });
                 }
 
@@ -392,7 +393,6 @@
             for (const [catName, productsObj] of Object.entries(db[currentBrand])) {
                 if (currentCat !== 'TODAS' && catName !== currentCat) continue;
 
-                // Convertimos el objeto de productos agrupados en un array para filtrarlo
                 const productsArray = Object.values(productsObj);
                 const filtered = productsArray.filter(p => p.name.toLowerCase().includes(query) || catName.toLowerCase().includes(query));
                 if (filtered.length === 0) continue;
@@ -415,7 +415,6 @@
                     const defaultVariant = p.variants[0];
                     const hasMultipleColors = p.variants.length > 1;
                     
-                    // JSON seguro para abrir el modal
                     const encodedData = encodeURIComponent(JSON.stringify(p));
 
                     let badgeHTML = hasMultipleColors ? `<div class="colors-badge">+${p.variants.length} Colores</div>` : '';
@@ -483,15 +482,17 @@
 
         function enviarPedido() {
             let msg = "📦 *NUEVO PEDIDO MAYOREO*\n\n";
-            cart.forEach(i => { msg += `• *${i.qty}x* ${i.name}\n  Color: ${i.color} | Precio: ${i.price}\n\n`; });
+            cart.forEach(i => { 
+                // AQUÍ SE AGREGA LA CATEGORÍA DE NUEVO AL MENSAJE
+                msg += `• *${i.qty}x* ${i.name}\n  Categoría: ${i.cat} | Color: ${i.color} | Precio: ${i.price}\n\n`; 
+            });
             msg += `*Total Piezas:* ${cart.reduce((acc, item) => acc + item.qty, 0)}\n\n¿Me confirman pedido?`;
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`);
         }
 
-        // LÓGICA DEL MODAL PARA CAMBIO DE COLORES E IMÁGENES
         function openModal(data) {
             modalProduct = JSON.parse(decodeURIComponent(data));
-            modalSelectedVariant = modalProduct.variants[0]; // Selecciona el primero por defecto
+            modalSelectedVariant = modalProduct.variants[0]; 
             
             document.getElementById('m-title').innerText = modalProduct.name + (modalProduct.quality ? ` (${modalProduct.quality})` : '');
             document.getElementById('m-brand').innerText = modalProduct.brand;
@@ -502,18 +503,15 @@
         }
 
         function renderModalVariants() {
-            // Actualiza imagen y precio según la variante seleccionada
             document.getElementById('m-img').src = modalSelectedVariant.img;
             document.getElementById('m-price').innerText = modalSelectedVariant.price;
             
-            // Genera los botones de colores
             const colorsContainer = document.getElementById('m-colors');
             colorsContainer.innerHTML = modalProduct.variants.map((v, index) => {
                 const isActive = (v.color === modalSelectedVariant.color) ? 'active' : '';
                 return `<div class="color-chip ${isActive}" onclick="selectModalVariant(${index})">${v.color}</div>`;
             }).join('');
 
-            // Actualiza la acción del botón añadir
             document.getElementById('m-add').onclick = () => { 
                 addToCart(modalProduct.name, modalSelectedVariant.price, modalSelectedVariant.color, null, modalProduct.cat); 
                 cerrarModal(); 
@@ -522,7 +520,7 @@
 
         function selectModalVariant(index) {
             modalSelectedVariant = modalProduct.variants[index];
-            renderModalVariants(); // Refresca la imagen, precio y el color activo
+            renderModalVariants(); 
         }
 
         function cerrarModal() { document.getElementById('modal').style.display = 'none'; }
