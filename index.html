@@ -43,9 +43,8 @@
         .brand-area { display: flex; align-items: center; gap: 15px; }
         .logo { max-width: 80px; height: auto; }
         
-        /* Títulos Principales en BOLD */
         .titles h1 { 
-            font-weight: 700; 
+            font-weight: 700; /* BOLD */
             font-size: 1.8rem; 
             margin: 0; 
             color: var(--primary); 
@@ -89,7 +88,6 @@
             .main-content { flex-grow: 1; }
         }
 
-        /* Categorías Estilo Lista en MEDIUM */
         .category-list {
             display: flex;
             flex-direction: column;
@@ -143,7 +141,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
         }
 
         .card {
@@ -158,6 +156,14 @@
         .card-title { font-size: 1rem; font-weight: 600; margin: 5px 0; }
         .card-price { font-size: 1.3rem; font-weight: 700; color: var(--primary); margin-bottom: 15px; }
         
+        .btn-ver-mas {
+            display: block; width: 100%; max-width: 300px; margin: 0 auto 50px;
+            padding: 10px; border: 2px solid var(--border); background: white;
+            border-radius: 30px; font-weight: 600; color: var(--text-secondary);
+            cursor: pointer; transition: 0.3s; font-family: 'Poppins', sans-serif;
+        }
+        .btn-ver-mas:hover { border-color: var(--primary); color: var(--primary); }
+
         .btn-action {
             padding: 12px; border-radius: 10px; text-align: center; font-weight: 600;
             font-size: 0.85rem; cursor: pointer; text-decoration: none; border: none;
@@ -193,7 +199,6 @@
         .color-chip { padding: 8px 16px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.85rem; }
         .color-chip.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        /* CARRITO FLOTANTE */
         .cart-float {
             position: fixed; bottom: 30px; right: 30px;
             background: var(--primary); color: white;
@@ -349,10 +354,15 @@
                 container.innerHTML += `<div class="category-title">${nomCat}</div>`;
                 const grid = document.createElement('div');
                 grid.className = 'grid-container';
+                
+                const catId = nomCat.replace(/\s/g, '');
 
                 fil.forEach((p, i) => {
                     const card = document.createElement('div');
                     card.className = 'card';
+                    card.setAttribute('data-cat', catId);
+                    if (i >= 3 && q === '') card.style.display = 'none'; // Ocultar si es más del tercero y no hay búsqueda
+                    
                     const v = p.variantes[0];
                     const pData = encodeURIComponent(JSON.stringify(p));
                     card.innerHTML = `
@@ -369,6 +379,18 @@
                     grid.appendChild(card);
                 });
                 container.appendChild(grid);
+
+                // Agregar botón Ver Más si hay más de 3
+                if (fil.length > 3 && q === '') {
+                    const btnMas = document.createElement('button');
+                    btnMas.className = 'btn-ver-mas';
+                    btnMas.innerText = `Ver más ${nomCat}`;
+                    btnMas.onclick = function() {
+                        document.querySelectorAll(`.card[data-cat="${catId}"]`).forEach(c => c.style.display = 'flex');
+                        this.style.display = 'none';
+                    };
+                    container.appendChild(btnMas);
+                }
             }
         }
 
@@ -376,7 +398,6 @@
             pedido.push({ cat, prod, cal, col, pre });
             document.getElementById('cart-count').innerText = pedido.length;
             document.getElementById('cart-btn').style.display = 'flex';
-            // Pequeño efecto visual al añadir
             const btn = document.getElementById('cart-btn');
             btn.style.transform = 'scale(1.1)';
             setTimeout(() => btn.style.transform = 'scale(1)', 200);
@@ -385,9 +406,10 @@
         window.enviarPedido = function() {
             let msg = "Hola *Pcclic Mayor*, mi pedido es:\n\n";
             pedido.forEach((it, i) => {
-                msg += `${i+1}. *[${it.cat.toUpperCase()}]* ${it.prod} (${it.cal})\n Color: ${it.col} | Precio: ${it.pre}\n\n`;
+                msg += `${i+1}. *[${it.cat.toUpperCase()}]* ${it.prod} (${it.cal})\n   Color: ${it.col} | Precio: ${it.pre}\n\n`;
             });
-            msg += "*Total de artículos:* " + pedido.length;
+            msg += "*Total de artículos:* " + pedido.length + "\n\n";
+            msg += "¿Me confirman disponibilidad y total a pagar?";
             window.open(`https://wa.me/${NUMERO_PEDIDO}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
