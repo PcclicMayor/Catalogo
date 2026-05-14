@@ -131,7 +131,7 @@
             height: 200px; background: #fff; display: flex; align-items: center; 
             justify-content: center; padding: 15px; position: relative; cursor: pointer;
         }
-        .card-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .card-img img { max-width: 100%; max-height: 100%; object-fit: contain; transition: 0.3s; }
         
         .colors-badge {
             position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6);
@@ -140,13 +140,14 @@
 
         .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
         .card-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 5px; min-height: 2.8em; }
-        .card-price { font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-bottom: 15px; }
+        .card-price { font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-bottom: 15px; transition: 0.3s; }
 
         .qty-selector {
             display: flex; align-items: center; justify-content: space-between;
             background: var(--bg); border-radius: 12px; padding: 6px 12px; margin-bottom: 15px;
         }
-        .qty-btn { width: 32px; height: 32px; border-radius: 50%; border: none; background: #fff; cursor: pointer; font-weight: bold; }
+        .qty-btn { width: 32px; height: 32px; border-radius: 50%; border: none; background: #fff; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .qty-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         
         .btn-action {
             width: 100%; padding: 12px; border-radius: 12px; border: none;
@@ -154,6 +155,7 @@
         }
         .btn-add { background: var(--primary); color: white; margin-bottom: 8px; }
         .btn-choose { background: white; color: var(--primary); border: 2px solid var(--primary); margin-bottom: 8px; }
+        .btn-agotado { background: #e8e8ed !important; color: #86868b !important; border: none !important; cursor: not-allowed !important; margin-bottom: 8px; }
         
         .btn-ver-mas {
             grid-column: 1 / -1; width: 100%; max-width: 250px; margin: 25px auto;
@@ -205,6 +207,7 @@
             cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: 0.2s; background: white;
         }
         .color-chip.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .color-chip.agotado { opacity: 0.4; cursor: not-allowed; text-decoration: line-through; border-color: var(--border) !important; background: transparent !important; color: var(--text-secondary) !important; }
 
         @media (max-width: 700px) {
             .modal-content { flex-direction: column; height: 90vh; overflow-y: auto; }
@@ -228,8 +231,8 @@
                 </div>
             </div>
             <div class="contact-header">
-                <div class="contact-item">📍 Barrio Obrero, Edf. Banco Activo, nivel 2. plaza los mangos.</div>
-                <div class="contact-item">📱 0424-7717071</div>
+                <div class="contact-item">📍 Barrio Obrero, Edificio de Banco Activo, nivel 2. Frente a la plaza los mangos.</div>
+                <div class="contact-item">📱 WhatsApp: 0424-7717071</div>
             </div>
         </div>
     </header>
@@ -250,15 +253,13 @@
         </main>
     </div>
 
-    <!-- Carrito Flotante -->
     <div class="cart-float" id="cart-btn" onclick="enviarPedido()">
         <span>🚀 Enviar Pedido</span>
         <span class="cart-badge" id="cart-count">0</span>
     </div>
 
-    <!-- Botón directo WhatsApp Flotante -->
     <a href="https://wa.me/584247717071" class="wa-float" target="_blank" title="Chatear con nosotros">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="white" xmlns="http://www.w3.org/2000/svg">
             <path d="M12.01 2.002c-5.514 0-10 4.486-10 10.001 0 1.764.453 3.424 1.252 4.898L2 21.998l5.244-1.214a9.96 9.96 0 0 0 4.766 1.215h.004c5.512 0 10-4.485 10-10.002 0-5.515-4.488-10-10-10zm0 16.326h-.003a8.318 8.318 0 0 1-4.22-1.144l-.304-.18-3.136.726.74-3.003-.198-.313a8.274 8.274 0 0 1-1.272-4.41c0-4.593 3.738-8.33 8.333-8.33 4.594 0 8.334 3.737 8.334 8.332-.001 4.593-3.74 8.322-8.333 8.322zm4.577-6.252c-.25-.125-1.488-.735-1.718-.819-.23-.084-.398-.125-.566.125-.167.25-.65 1.002-.797 1.209-.146.208-.293.234-.543.109-.25-.125-1.062-.392-2.022-1.25-.746-.667-1.25-1.492-1.396-1.742-.146-.25-.015-.385.11-.51.112-.112.25-.292.375-.438.125-.146.167-.25.25-.417.084-.167.042-.313-.021-.438-.063-.125-.566-1.365-.776-1.871-.203-.492-.41-.425-.566-.433-.146-.008-.313-.008-.48-.008s-.438.063-.667.313c-.23.25-.875.854-.875 2.083s.896 2.417 1.021 2.583c.125.167 1.761 2.688 4.261 3.766 1.7.734 2.372.825 3.23.696.953-.144 2.946-1.203 3.364-2.366.417-1.163.417-2.158.292-2.366-.125-.208-.458-.333-.708-.458z"/>
         </svg>
     </a>
@@ -270,15 +271,15 @@
             <div class="modal-right">
                 <div id="m-brand" style="color: var(--accent); font-weight: 700; font-size: 0.8rem; text-transform: uppercase;"></div>
                 <h2 id="m-title" style="margin: 5px 0 15px;"></h2>
-                <div id="m-price" style="font-size: 2rem; font-weight: 700; margin-bottom: 20px;"></div>
+                <div id="m-price" style="font-size: 2rem; font-weight: 700; margin-bottom: 20px; transition: 0.3s;"></div>
                 
                 <div style="font-weight: 600; margin-bottom: 10px; font-size: 0.85rem;">Seleccionar Color/Variante:</div>
                 <div id="m-colors" style="display: flex; gap: 8px; margin-bottom: 25px; flex-wrap: wrap;"></div>
                 
                 <div class="qty-selector">
-                    <button class="qty-btn" onclick="changeQtyModal(-1)">-</button>
+                    <button class="qty-btn" id="m-qty-minus" onclick="changeQtyModal(-1)">-</button>
                     <span id="modal-qty" style="font-weight: 700;">1</span>
-                    <button class="qty-btn" onclick="changeQtyModal(1)">+</button>
+                    <button class="qty-btn" id="m-qty-plus" onclick="changeQtyModal(1)">+</button>
                 </div>
                 <button id="m-add" class="btn-action btn-add">Añadir al Pedido</button>
             </div>
@@ -295,6 +296,7 @@
         let cart = [];
         let modalProduct = null;
         let modalSelectedVariant = null;
+        let expandedCats = new Set(); // Guarda las categorías que el usuario ya desplegó
 
         function parseCSV(str) {
             const arr = []; let row = []; let cell = ''; let inQuotes = false;
@@ -310,13 +312,13 @@
             return arr;
         }
 
-        async function init() {
+        async function fetchAndBuildDB() {
             try {
                 const response = await fetch(SHEET_URL);
                 const csvText = await response.text();
                 const rows = parseCSV(csvText);
                 
-                if(rows.length < 2) return;
+                if(rows.length < 2) return null;
 
                 const header = rows[0].map(h => h.toLowerCase());
                 const iM = header.findIndex(h => h.includes('marca'));
@@ -326,9 +328,12 @@
                 const iCal = header.findIndex(h => h.includes('calid'));
                 const iPre = header.findIndex(h => h.includes('preci'));
                 const iImg = header.findIndex(h => h.includes('imag'));
+                
+                // Busca si hay columna de stock, cantidad, estado o disponibilidad
+                const iStock = header.findIndex(h => h.includes('stock') || h.includes('cant') || h.includes('estad') || h.includes('disponib'));
 
-                db = {};
-                const brands = new Set();
+                let newDb = {};
+                let newBrands = new Set();
 
                 for (let i = 1; i < rows.length; i++) {
                     const row = rows[i];
@@ -338,34 +343,75 @@
                     const col = row[iCol] || 'Único', cal = row[iCal] || '', pre = row[iPre] || '';
                     let img = row[iImg] || '';
                     
-                    brands.add(m);
-                    if (!db[m]) db[m] = {};
-                    if (!db[m][c]) db[m][c] = {};
+                    // LÓGICA DE "AGOTADO"
+                    let stockVal = (iStock !== -1 && row[iStock]) ? row[iStock].toString().toLowerCase().trim() : '';
+                    let preLow = pre.toLowerCase();
+                    let isAgotado = (stockVal === '0' || stockVal === 'agotado' || stockVal === 'no' || preLow.includes('agotado'));
+
+                    newBrands.add(m);
+                    if (!newDb[m]) newDb[m] = {};
+                    if (!newDb[m][c]) newDb[m][c] = {};
                     
                     const productKey = `${p} - ${cal}`;
                     
-                    if (!db[m][c][productKey]) {
-                        db[m][c][productKey] = { brand: m, cat: c, name: p, quality: cal, variants: [] };
+                    if (!newDb[m][c][productKey]) {
+                        newDb[m][c][productKey] = { brand: m, cat: c, name: p, quality: cal, variants: [] };
                     }
                     
-                    // Si este color no tiene foto, usar la foto del primer color registrado (herencia de imagen)
-                    if (img === '' && db[m][c][productKey].variants.length > 0) {
-                        img = db[m][c][productKey].variants[0].img;
+                    // Herencia de imagen
+                    if (img === '' && newDb[m][c][productKey].variants.length > 0) {
+                        img = newDb[m][c][productKey].variants[0].img;
                     }
 
-                    db[m][c][productKey].variants.push({ color: col, price: pre, img: img });
+                    newDb[m][c][productKey].variants.push({ color: col, price: pre, img: img, isAgotado: isAgotado });
                 }
+                return { db: newDb, brands: newBrands };
+            } catch (err) {
+                console.error("Error conectando con el inventario:", err);
+                return null;
+            }
+        }
 
-                const brandContainer = document.getElementById('brand-filters');
-                brandContainer.innerHTML = Array.from(brands).map(b => `<button class="filter-btn" onclick="setBrand('${b}')">${b}</button>`).join('');
-                
-                if (brands.size > 0) setBrand(Array.from(brands)[0]);
-            } catch (err) { console.error("Error cargando base de datos", err); }
+        async function init() {
+            const data = await fetchAndBuildDB();
+            if(!data) return;
+            
+            db = data.db;
+            const brands = data.brands;
+
+            const brandContainer = document.getElementById('brand-filters');
+            brandContainer.innerHTML = Array.from(brands).map(b => `<button class="filter-btn" onclick="setBrand('${b}')">${b}</button>`).join('');
+            
+            if (brands.size > 0) setBrand(Array.from(brands)[0]);
+
+            // MAGIA EN TIEMPO REAL: Revisa el inventario silenciosamente cada 90 segundos
+            setInterval(async () => {
+                const liveData = await fetchAndBuildDB();
+                if (liveData) {
+                    db = liveData.db;
+                    render(document.getElementById('search').value, true);
+                    
+                    // Si el modal está abierto, actualizamos su estado
+                    if(document.getElementById('modal').style.display === 'flex' && modalProduct) {
+                        const liveCat = db[modalProduct.brand]?.[modalProduct.cat];
+                        if (liveCat) {
+                            const liveProd = liveCat[`${modalProduct.name} - ${modalProduct.quality}`];
+                            if (liveProd) {
+                                modalProduct = liveProd;
+                                const liveVar = modalProduct.variants.find(v => v.color === modalSelectedVariant.color);
+                                if (liveVar) modalSelectedVariant = liveVar;
+                                renderModalVariants();
+                            }
+                        }
+                    }
+                }
+            }, 90000); 
         }
 
         function setBrand(m) {
             currentBrand = m;
             currentCat = 'TODAS';
+            expandedCats.clear(); // Resetear los ver más
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.toggle('active', btn.innerText === m));
             
             const cats = Object.keys(db[m]);
@@ -378,16 +424,26 @@
 
         function setCat(c, btn) {
             currentCat = c;
+            expandedCats.clear();
             document.querySelectorAll('.cat-list-item').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             render();
         }
 
-        function render(searchQuery = '') {
+        function expandCat(safeCatId, btnEl) {
+            expandedCats.add(safeCatId);
+            document.querySelectorAll(`.group-${safeCatId}`).forEach(c => c.style.display = 'flex');
+            btnEl.style.display = 'none';
+        }
+
+        function render(searchQuery = '', isSilentRefresh = false) {
             const container = document.getElementById('catalogo');
-            container.innerHTML = '';
             const query = searchQuery.toLowerCase();
             
+            // Si es un refresh silencioso, guardamos el scroll para que no brinque la pantalla
+            const scrollPos = window.scrollY;
+            
+            let htmlHTML = "";
             if (!db[currentBrand]) return;
 
             for (const [catName, productsObj] of Object.entries(db[currentBrand])) {
@@ -398,68 +454,73 @@
                 if (filtered.length === 0) continue;
 
                 const safeCatId = catName.replace(/[^a-z0-9]/gi, '_'); 
+                const isExpanded = expandedCats.has(safeCatId);
                 
-                const section = document.createElement('div');
-                section.innerHTML = `<div class="category-title">${catName}</div>`;
-                const grid = document.createElement('div');
-                grid.className = 'grid-container';
+                let sectionHTML = `<div class="category-title">${catName}</div><div class="grid-container">`;
 
                 filtered.forEach((p, idx) => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.classList.add(`group-${safeCatId}`);
+                    // Control de display (Ver Más)
+                    let displayStyle = (idx >= 3 && query === '' && !isExpanded) ? 'display: none;' : 'display: flex;';
                     
-                    if (idx >= 3 && query === '') card.style.display = 'none'; 
-
                     const pId = `qty-${safeCatId}-${idx}`;
-                    const defaultVariant = p.variants[0];
                     const hasMultipleColors = p.variants.length > 1;
+                    const allAgotado = p.variants.every(v => v.isAgotado);
                     
+                    // Buscar la primera variante disponible para mostrarla, si no hay, muestra la primera
+                    const defaultVariant = p.variants.find(v => !v.isAgotado) || p.variants[0]; 
                     const encodedData = encodeURIComponent(JSON.stringify(p));
 
                     let badgeHTML = hasMultipleColors ? `<div class="colors-badge">+${p.variants.length} Colores</div>` : '';
-                    let buttonHTML = hasMultipleColors 
-                        ? `<button class="btn-action btn-choose" onclick="openModal('${encodedData}')">Elegir Color 🎨</button>`
-                        : `<button class="btn-action btn-add" onclick="addToCart('${p.name}', '${defaultVariant.price}', '${defaultVariant.color}', '${pId}', '${catName}')">Añadir al pedido 🛒</button>`;
+                    let cardOpacity = allAgotado ? 'opacity: 0.6; filter: grayscale(80%);' : '';
+                    
+                    let buttonHTML = '';
+                    if (allAgotado) {
+                        buttonHTML = `<button class="btn-action btn-agotado" disabled>Agotado 🚫</button>`;
+                    } else if (hasMultipleColors) {
+                        buttonHTML = `<button class="btn-action btn-choose" onclick="openModal('${encodedData}')">Elegir Color 🎨</button>`;
+                    } else {
+                        buttonHTML = `<button class="btn-action btn-add" onclick="addToCart('${p.name}', '${defaultVariant.price}', '${defaultVariant.color}', '${pId}', '${catName}')">Añadir al pedido 🛒</button>`;
+                    }
 
-                    card.innerHTML = `
-                        <div class="card-img" onclick="openModal('${encodedData}')">
-                            <img src="${defaultVariant.img}" loading="lazy">
-                            ${badgeHTML}
-                        </div>
-                        <div class="card-body">
-                            <div class="card-title">${p.name} <br><small style="color:var(--accent); font-weight:700;">${p.quality}</small></div>
-                            <div class="card-price">${defaultVariant.price}</div>
-                            <div class="qty-selector">
-                                <button class="qty-btn" onclick="updateQty('${pId}', -1)">-</button>
-                                <span id="${pId}" style="font-weight:700">1</span>
-                                <button class="qty-btn" onclick="updateQty('${pId}', 1)">+</button>
+                    // Selector estado
+                    let qtyDisabled = allAgotado ? 'disabled' : '';
+
+                    sectionHTML += `
+                        <div class="card group-${safeCatId}" style="${displayStyle} ${cardOpacity}">
+                            <div class="card-img" onclick="openModal('${encodedData}')">
+                                <img src="${defaultVariant.img}" loading="lazy">
+                                ${badgeHTML}
                             </div>
-                            ${buttonHTML}
+                            <div class="card-body">
+                                <div class="card-title">${p.name} <br><small style="color:var(--accent); font-weight:700;">${p.quality}</small></div>
+                                <div class="card-price" style="${allAgotado ? 'color:#ff3b30;' : ''}">${allAgotado ? 'AGOTADO' : defaultVariant.price}</div>
+                                <div class="qty-selector">
+                                    <button class="qty-btn" onclick="updateQty('${pId}', -1)" ${qtyDisabled}>-</button>
+                                    <span id="${pId}" style="font-weight:700">1</span>
+                                    <button class="qty-btn" onclick="updateQty('${pId}', 1)" ${qtyDisabled}>+</button>
+                                </div>
+                                ${buttonHTML}
+                            </div>
                         </div>
                     `;
-                    grid.appendChild(card);
                 });
 
-                section.appendChild(grid);
+                sectionHTML += `</div>`;
                 
-                if (filtered.length > 3 && query === '') {
-                    const btn = document.createElement('button');
-                    btn.className = 'btn-ver-mas';
-                    btn.innerText = `Ver más ${catName}`;
-                    btn.onclick = () => {
-                        document.querySelectorAll(`.group-${safeCatId}`).forEach(c => c.style.display = 'flex');
-                        btn.style.display = 'none';
-                    };
-                    section.appendChild(btn);
+                if (filtered.length > 3 && query === '' && !isExpanded) {
+                    sectionHTML += `<button class="btn-ver-mas" onclick="expandCat('${safeCatId}', this)">Ver más ${catName}</button>`;
                 }
 
-                container.appendChild(section);
+                htmlHTML += `<div>${sectionHTML}</div>`;
             }
+            
+            container.innerHTML = htmlHTML;
+            if(isSilentRefresh) window.scrollTo(0, scrollPos);
         }
 
         function updateQty(id, delta) {
             const el = document.getElementById(id);
+            if(!el) return;
             let val = parseInt(el.innerText) + delta;
             if (val >= 1) el.innerText = val;
         }
@@ -471,6 +532,11 @@
             if (existing) existing.qty += qty; else cart.push(item);
             updateCartUI();
             if (qtyId) document.getElementById(qtyId).innerText = "1";
+            
+            // Animación del botón carrito
+            const btn = document.getElementById('cart-btn');
+            btn.style.transform = 'scale(1.1) translateX(-45%)';
+            setTimeout(() => btn.style.transform = 'translateX(-50%)', 200);
         }
 
         function updateCartUI() {
@@ -481,18 +547,19 @@
         }
 
         function enviarPedido() {
-            let msg = "📦 *NUEVO PEDIDO MAYOREO*\n\n";
+            let msg = "📦 *NUEVO PEDIDO*\n\n";
             cart.forEach(i => { 
-                // AQUÍ SE AGREGA LA CATEGORÍA DE NUEVO AL MENSAJE
-                msg += `• *${i.qty}x* ${i.name}\n  Categoría: ${i.cat} | Color: ${i.color} | Precio: ${i.price}\n\n`; 
+                msg += `• *${i.qty}x* ${i.name}\n  Categoría: ${i.cat} | Color: ${i.color} | Precio unit: ${i.price}\n\n`; 
             });
-            msg += `*Total Piezas:* ${cart.reduce((acc, item) => acc + item.qty, 0)}\n\n¿Me confirman pedido?`;
+            msg += `*Total Piezas:* ${cart.reduce((acc, item) => acc + item.qty, 0)}\n\n¿Me confirman disponibilidad y total a pagar?`;
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`);
         }
 
+        // LÓGICA DEL MODAL PARA "AGOTADO"
         function openModal(data) {
             modalProduct = JSON.parse(decodeURIComponent(data));
-            modalSelectedVariant = modalProduct.variants[0]; 
+            // Buscar la primera variante disponible para abrirla, si todas están agotadas, abre la primera
+            modalSelectedVariant = modalProduct.variants.find(v => !v.isAgotado) || modalProduct.variants[0]; 
             
             document.getElementById('m-title').innerText = modalProduct.name + (modalProduct.quality ? ` (${modalProduct.quality})` : '');
             document.getElementById('m-brand').innerText = modalProduct.brand;
@@ -504,21 +571,47 @@
 
         function renderModalVariants() {
             document.getElementById('m-img').src = modalSelectedVariant.img;
-            document.getElementById('m-price').innerText = modalSelectedVariant.price;
             
+            const btnAdd = document.getElementById('m-add');
+            const priceEl = document.getElementById('m-price');
+            const qtyMinus = document.getElementById('m-qty-minus');
+            const qtyPlus = document.getElementById('m-qty-plus');
+
+            // Renderizar los chips de colores
             const colorsContainer = document.getElementById('m-colors');
             colorsContainer.innerHTML = modalProduct.variants.map((v, index) => {
                 const isActive = (v.color === modalSelectedVariant.color) ? 'active' : '';
-                return `<div class="color-chip ${isActive}" onclick="selectModalVariant(${index})">${v.color}</div>`;
+                const isAgotadoClass = v.isAgotado ? 'agotado' : '';
+                return `<div class="color-chip ${isActive} ${isAgotadoClass}" onclick="selectModalVariant(${index}, ${v.isAgotado})">${v.color}</div>`;
             }).join('');
 
-            document.getElementById('m-add').onclick = () => { 
-                addToCart(modalProduct.name, modalSelectedVariant.price, modalSelectedVariant.color, null, modalProduct.cat); 
-                cerrarModal(); 
-            };
+            // Estado visual si está agotado
+            if (modalSelectedVariant.isAgotado) {
+                priceEl.innerText = "AGOTADO";
+                priceEl.style.color = "#ff3b30";
+                
+                btnAdd.innerText = "Agotado 🚫";
+                btnAdd.className = "btn-action btn-agotado";
+                btnAdd.onclick = null;
+                
+                qtyMinus.disabled = true; qtyPlus.disabled = true;
+            } else {
+                priceEl.innerText = modalSelectedVariant.price;
+                priceEl.style.color = "var(--primary)";
+                
+                btnAdd.innerText = "Añadir al Pedido";
+                btnAdd.className = "btn-action btn-add";
+                btnAdd.onclick = () => { 
+                    addToCart(modalProduct.name, modalSelectedVariant.price, modalSelectedVariant.color, null, modalProduct.cat); 
+                    cerrarModal(); 
+                };
+                
+                qtyMinus.disabled = false; qtyPlus.disabled = false;
+            }
         }
 
-        function selectModalVariant(index) {
+        function selectModalVariant(index, isAgotado) {
+            // Si quieres permitir ver la foto de lo agotado, dejamos que hagan clic (pero no lo compran)
             modalSelectedVariant = modalProduct.variants[index];
             renderModalVariants(); 
         }
@@ -526,12 +619,17 @@
         function cerrarModal() { document.getElementById('modal').style.display = 'none'; }
         
         function changeQtyModal(delta) {
+            if(modalSelectedVariant.isAgotado) return;
             const el = document.getElementById('modal-qty');
             let val = parseInt(el.innerText) + delta;
             if (val >= 1) el.innerText = val;
         }
 
-        document.getElementById('search').addEventListener('input', (e) => render(e.target.value));
+        document.getElementById('search').addEventListener('input', (e) => {
+            expandedCats.clear(); // Resetear ver mas en busquedas
+            render(e.target.value);
+        });
+        
         init();
     </script>
 </body>
