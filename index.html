@@ -343,10 +343,22 @@
                     const col = row[iCol] || 'Único', cal = row[iCal] || '', pre = row[iPre] || '';
                     let img = row[iImg] || '';
                     
-                    // LÓGICA DE "AGOTADO"
+                    // LÓGICA DE "AGOTADO" OPTIMIZADA POR STOCK NUMÉRICO
                     let stockVal = (iStock !== -1 && row[iStock]) ? row[iStock].toString().toLowerCase().trim() : '';
                     let preLow = pre.toLowerCase();
-                    let isAgotado = (stockVal === '0' || stockVal === 'agotado' || stockVal === 'no' || preLow.includes('agotado'));
+                    
+                    // Si el stock tiene un número válido, evalúa matemáticamente. Si está vacío, asume que está disponible.
+                    let isAgotado = false;
+                    if (stockVal !== '') {
+                        let numericStock = parseFloat(stockVal);
+                        if (!isNaN(numericStock)) {
+                            isAgotado = (numericStock <= 0);
+                        } else {
+                            isAgotado = (stockVal === '0' || stockVal === 'agotado' || stockVal === 'no' || preLow.includes('agotado'));
+                        }
+                    } else {
+                        isAgotado = preLow.includes('agotado');
+                    }
 
                     newBrands.add(m);
                     if (!newDb[m]) newDb[m] = {};
